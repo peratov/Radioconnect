@@ -1,0 +1,69 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="bg-gray-100">
+    <ActionBar title="RadioConnect" class="bg-purple-600">
+        <NavigationButton visibility="collapsed" />
+        <ActionItem ios.position="right" android.position="actionBar" tap="{{ onSearch }}">
+            <Label text="&#xf002;" class="fas text-white" />
+        </ActionItem>
+    </ActionBar>
+
+    <GridLayout rows="*, auto">
+        <!-- Main Content -->
+        <GridLayout row="0" rows="auto, auto, auto, *">
+            <StackLayout row="0" class="p-4">
+                <SearchBar hint="Search stations..." text="{{ searchQuery }}" submit="{{ onSearchSubmit }}" 
+                    class="bg-white rounded-lg" />
+            </StackLayout>
+
+            <!-- Banner Ad Section -->
+            <GridLayout row="1" class="mx-4 mb-4">
+                <Image src="{{ currentBannerAd }}" height="100" stretch="aspectFill" 
+                       class="rounded-lg" tap="{{ onBannerTap }}" />
+                <Label text="Advertisement" class="text-xs text-gray-500 absolute top-1 right-2" />
+            </GridLayout>
+
+            <!-- Featured Label -->
+            <Label row="2" text="Featured Stations" class="text-lg font-semibold px-4 pb-2" />
+
+            <!-- Stations List -->
+            <ListView row="3" items="{{ stations }}" itemTap="{{ onStationTap }}" class="list-group">
+                <ListView.itemTemplate>
+                    <GridLayout rows="auto" class="p-4 bg-white border-b border-gray-200">
+                        <GridLayout columns="auto, *, auto" class="mb-2">
+                            <Image col="0" src="{{ logo }}" width="50" height="50" class="rounded-full mr-4" 
+                                   defaultSource="~/assets/default-station.png"/>
+                            <StackLayout col="1">
+                                <Label text="{{ name }}" class="text-lg font-semibold" />
+                                <Label text="{{ genre }}" class="text-sm text-gray-600" />
+                                <Label text="{{ location }}" class="text-xs text-gray-500" />
+                            </StackLayout>
+                            <GridLayout col="2" columns="auto, auto" class="ml-2">
+                                <Button col="0" text="&#xf232;" tap="{{ $parents['ListView'].onWhatsAppTap }}"
+                                        class="fas -outline p-2 m-1 text-green-600 border-green-600" />
+                                <Label col="1" text="{{ isFavorite ? '&#xf004;' : '&#xf08a;' }}" 
+                                       tap="{{ $parents['ListView'].toggleFavorite }}" 
+                                       class="fas text-xl p-2" 
+                                       className="{{ isFavorite ? 'text-red-500' : 'text-gray-400' }}" />
+                            </GridLayout>
+                        </GridLayout>
+                    </GridLayout>
+                </ListView.itemTemplate>
+            </ListView>
+        </GridLayout>
+
+        <!-- Footer Navigation -->
+        <GridLayout row="1" columns="*, *, *" class="bg-white border-t border-gray-200 p-2">
+            <GridLayout col="0" rows="auto, auto" tap="{{ onHomeTab }}" class="{{ activeTab === 'home' ? 'text-purple-600' : 'text-gray-600' }}">
+                <Label row="0" text="&#xf015;" class="fas text-2xl text-center"/>
+                <Label row="1" text="Home" class="text-xs text-center mt-1"/>
+            </GridLayout>
+            <GridLayout col="1" rows="auto, auto" tap="{{ onAddStationTab }}" class="{{ activeTab === 'add' ? 'text-purple-600' : 'text-gray-600' }}">
+                <Label row="0" text="&#xf055;" class="fas text-2xl text-center"/>
+                <Label row="1" text="Add Station" class="text-xs text-center mt-1"/>
+            </GridLayout>
+            <GridLayout col="2" rows="auto, auto" tap="{{ onProfileTab }}" class="{{ activeTab === 'profile' ? 'text-purple-600' : 'text-gray-600' }}">
+                <Label row="0" text="&#xf2bd;" class="fas text-2xl text-center"/>
+                <Label row="1" text="Profile" class="text-xs text-center mt-1"/>
+            </GridLayout>
+        </GridLayout>
+    </GridLayout>
+</Page>

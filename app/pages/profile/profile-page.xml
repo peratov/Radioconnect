@@ -1,0 +1,118 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="bg-gray-100">
+    <ActionBar title="Profile" class="bg-purple-600">
+        <NavigationButton text="Back" />
+    </ActionBar>
+
+    <GridLayout rows="*, auto">
+        <ScrollView row="0">
+            <StackLayout class="p-4">
+                <!-- Logged In View -->
+                <GridLayout rows="auto, auto" columns="auto, *" class="mb-6 bg-white p-4 rounded-lg" visibility="{{ isLoggedIn ? 'visible' : 'collapsed' }}">
+                    <Label row="0" col="0" text="&#xf007;" class="fas text-3xl text-purple-600"/>
+                    <Label row="0" col="1" text="{{ username }}" class="text-xl font-bold ml-2"/>
+                    <Label row="1" col="1" text="{{ email }}" class="text-gray-600 ml-2"/>
+                    <Label row="0" col="1" text="Admin" class="text-sm text-purple-600 font-bold text-right" visibility="{{ isAdmin ? 'visible' : 'collapsed' }}"/>
+                </GridLayout>
+
+                <!-- Admin Dashboard -->
+                <StackLayout visibility="{{ isAdmin ? 'visible' : 'collapsed' }}" class="mb-6">
+                    <Label text="Admin Dashboard" class="text-xl font-bold mb-4"/>
+                    <Button text="Manage Station Approvals" tap="{{ onManageStations }}" class="-primary p-4 rounded-lg mb-4"/>
+                    <Button text="Manage Banner Ads" tap="{{ onManageBannerAds }}" class="-primary p-4 rounded-lg mb-4"/>
+                </StackLayout>
+
+                <!-- Auth Forms -->
+                <StackLayout visibility="{{ !isLoggedIn ? 'visible' : 'collapsed' }}" class="mb-6">
+                    <!-- Toggle Buttons -->
+                    <GridLayout columns="*, *, *" class="mb-4">
+                        <Button col="0" text="Login" tap="{{ showLoginForm }}" 
+                                class="{{ isLoginForm ? '-primary' : '-outline' }} m-1"/>
+                        <Button col="1" text="Register" tap="{{ showRegisterForm }}" 
+                                class="{{ !isLoginForm && !isAdminForm ? '-primary' : '-outline' }} m-1"/>
+                        <Button col="2" text="Admin" tap="{{ showAdminForm }}"
+                                class="{{ isAdminForm ? '-primary' : '-outline' }} m-1"/>
+                    </GridLayout>
+
+                    <!-- Login Form -->
+                    <StackLayout visibility="{{ isLoginForm ? 'visible' : 'collapsed' }}">
+                        <Label text="Welcome Back!" class="text-xl font-bold text-center mb-4"/>
+                        <TextField text="{{ email }}" hint="Email" keyboardType="email" 
+                                 class="mb-4 p-4 bg-white rounded"/>
+                        <TextField text="{{ password }}" hint="Password" secure="true" 
+                                 class="mb-4 p-4 bg-white rounded"/>
+                        <Button text="Login" tap="{{ onLogin }}" class="-primary p-4 rounded-lg mb-4"/>
+                        <Label text="Forgot Password?" tap="{{ onForgotPassword }}" 
+                               class="text-center text-purple-600 mb-4"/>
+                    </StackLayout>
+
+                    <!-- Admin Login Form -->
+                    <StackLayout visibility="{{ isAdminForm ? 'visible' : 'collapsed' }}">
+                        <Label text="Admin Login" class="text-xl font-bold text-center mb-4"/>
+                        <TextField text="{{ email }}" hint="Admin Email" keyboardType="email" 
+                                 class="mb-4 p-4 bg-white rounded"/>
+                        <TextField text="{{ password }}" hint="Password" secure="true" 
+                                 class="mb-4 p-4 bg-white rounded"/>
+                        <Button text="Login as Admin" tap="{{ onAdminLogin }}" class="-primary p-4 rounded-lg mb-4"/>
+                    </StackLayout>
+
+                    <!-- Register Form -->
+                    <StackLayout visibility="{{ !isLoginForm && !isAdminForm ? 'visible' : 'collapsed' }}">
+                        <Label text="Create Account" class="text-xl font-bold text-center mb-4"/>
+                        <TextField text="{{ username }}" hint="Username" 
+                                 class="mb-4 p-4 bg-white rounded"/>
+                        <TextField text="{{ email }}" hint="Email" keyboardType="email" 
+                                 class="mb-4 p-4 bg-white rounded"/>
+                        <TextField text="{{ password }}" hint="Password" secure="true" 
+                                 class="mb-4 p-4 bg-white rounded"/>
+                        <TextField text="{{ confirmPassword }}" hint="Confirm Password" secure="true" 
+                                 class="mb-4 p-4 bg-white rounded"/>
+                        <Button text="Register" tap="{{ onRegister }}" class="-primary p-4 rounded-lg"/>
+                    </StackLayout>
+
+                    <!-- Social Login -->
+                    <StackLayout class="mt-6" visibility="{{ !isAdminForm ? 'visible' : 'collapsed' }}">
+                        <Label text="Or continue with" class="text-center text-gray-500 mb-4"/>
+                        <GridLayout columns="*, *, *" class="mb-4">
+                            <Button col="0" text="&#xf39e;" tap="{{ onFacebookLogin }}" 
+                                    class="fab -outline m-1 text-blue-600"/>
+                            <Button col="1" text="&#xf099;" tap="{{ onTwitterLogin }}" 
+                                    class="fab -outline m-1 text-blue-400"/>
+                            <Button col="2" text="&#xf1a0;" tap="{{ onGoogleLogin }}" 
+                                    class="fab -outline m-1 text-red-500"/>
+                        </GridLayout>
+                    </StackLayout>
+                </StackLayout>
+
+                <!-- Favorite Stations -->
+                <StackLayout visibility="{{ isLoggedIn && !isAdmin ? 'visible' : 'collapsed' }}">
+                    <Label text="My Favorite Stations" class="text-xl font-bold mb-4"/>
+                    <ListView items="{{ favoriteStations }}" class="mb-4">
+                        <ListView.itemTemplate>
+                            <StackLayout class="p-4 bg-white border-b border-gray-200">
+                                <Label text="{{ name }}" class="font-bold"/>
+                                <Label text="{{ genre }}" class="text-gray-600"/>
+                            </StackLayout>
+                        </ListView.itemTemplate>
+                    </ListView>
+                    <Button text="Logout" tap="{{ onLogout }}" class="-outline p-4 rounded-lg"/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Footer -->
+        <GridLayout row="1" columns="*, *, *" class="bg-white border-t border-gray-200 p-2">
+            <GridLayout col="0" rows="auto, auto" tap="{{ onHomeTab }}" class="text-gray-600">
+                <Label row="0" text="&#xf015;" class="fas text-2xl text-center"/>
+                <Label row="1" text="Home" class="text-xs text-center mt-1"/>
+            </GridLayout>
+            <GridLayout col="1" rows="auto, auto" tap="{{ onAddStationTab }}" class="text-gray-600">
+                <Label row="0" text="&#xf055;" class="fas text-2xl text-center"/>
+                <Label row="1" text="Add Station" class="text-xs text-center mt-1"/>
+            </GridLayout>
+            <GridLayout col="2" rows="auto, auto" tap="{{ onProfileTab }}" class="text-purple-600">
+                <Label row="0" text="&#xf2bd;" class="fas text-2xl text-center"/>
+                <Label row="1" text="Profile" class="text-xs text-center mt-1"/>
+            </GridLayout>
+        </GridLayout>
+    </GridLayout>
+</Page>

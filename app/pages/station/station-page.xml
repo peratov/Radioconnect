@@ -1,0 +1,87 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="bg-gray-100">
+    <ActionBar class="bg-purple-600">
+        <NavigationButton text="Back" />
+        <Label text="{{ station.name }}" class="text-white" />
+    </ActionBar>
+
+    <GridLayout rows="*, auto">
+        <ScrollView row="0">
+            <StackLayout class="p-4">
+                <!-- Station Header -->
+                <GridLayout rows="auto" columns="auto, *" class="mb-6">
+                    <Image col="0" src="{{ station.logo }}" width="80" height="80" 
+                           class="rounded-lg" defaultSource="~/assets/default-station.png"/>
+                    <StackLayout col="1" class="ml-4">
+                        <Label text="{{ station.name }}" class="text-2xl font-bold"/>
+                        <Label text="{{ station.genre }}" class="text-gray-600"/>
+                        <Label text="{{ station.location }}" class="text-gray-500"/>
+                    </StackLayout>
+                </GridLayout>
+
+                <!-- Action Buttons -->
+                <GridLayout columns="*, *, *" class="mb-6">
+                    <Button col="0" text="&#xf08a; {{ isFavorite ? 'Unfavorite' : 'Favorite' }}" 
+                            tap="{{ toggleFavorite }}" class="fas -outline m-1"/>
+                    <Button col="1" text="&#xf232; WhatsApp" tap="{{ onWhatsAppTap }}"
+                            class="fas -outline m-1 text-green-600"/>
+                    <Button col="2" text="&#xf1e0; Share" tap="{{ onShareTap }}"
+                            class="fas -outline m-1"/>
+                </GridLayout>
+
+                <!-- Banner Ad -->
+                <GridLayout class="mb-6">
+                    <Image src="{{ station.bannerAdUrl }}" height="100" stretch="aspectFill" 
+                           class="rounded-lg" tap="{{ onBannerTap }}" />
+                    <Label text="Advertisement" class="text-xs text-gray-500 absolute top-1 right-2" />
+                </GridLayout>
+
+                <!-- Description -->
+                <Label text="About" class="text-xl font-bold mb-2"/>
+                <Label text="{{ station.description }}" textWrap="true" class="text-gray-700 mb-6"/>
+
+                <!-- Social Links -->
+                <Label text="Connect With Us" class="text-xl font-bold mb-2"/>
+                <GridLayout columns="auto, *" class="mb-2" visibility="{{ station.socialLinks.facebook ? 'visible' : 'collapsed' }}">
+                    <Label col="0" text="&#xf39e;" class="fab text-lg text-blue-600 mr-2"/>
+                    <Label col="1" text="{{ station.socialLinks.facebook }}" class="text-blue-600" tap="{{ onFacebookTap }}"/>
+                </GridLayout>
+                <GridLayout columns="auto, *" class="mb-2" visibility="{{ station.socialLinks.twitter ? 'visible' : 'collapsed' }}">
+                    <Label col="0" text="&#xf099;" class="fab text-lg text-blue-400 mr-2"/>
+                    <Label col="1" text="{{ station.socialLinks.twitter }}" class="text-blue-400" tap="{{ onTwitterTap }}"/>
+                </GridLayout>
+                <GridLayout columns="auto, *" class="mb-6" visibility="{{ station.socialLinks.instagram ? 'visible' : 'collapsed' }}">
+                    <Label col="0" text="&#xf16d;" class="fab text-lg text-pink-600 mr-2"/>
+                    <Label col="1" text="{{ station.socialLinks.instagram }}" class="text-pink-600" tap="{{ onInstagramTap }}"/>
+                </GridLayout>
+
+                <!-- Program Schedule -->
+                <Label text="Today's Schedule" class="text-xl font-bold mb-2"/>
+                <ListView items="{{ station.schedule }}" class="mb-4" height="{{ station.schedule.length * 80 }}">
+                    <ListView.itemTemplate>
+                        <GridLayout columns="auto, *" rows="auto, auto" class="p-4 bg-white border-b border-gray-200">
+                            <Label col="0" rowSpan="2" text="{{ startTime }}" class="text-lg font-semibold mr-4"/>
+                            <Label col="1" row="0" text="{{ name }}" class="font-bold"/>
+                            <Label col="1" row="1" text="{{ host }}" class="text-gray-600"/>
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Footer -->
+        <GridLayout row="1" columns="*, *, *" class="bg-white border-t border-gray-200 p-2">
+            <GridLayout col="0" rows="auto, auto" tap="{{ onHomeTab }}" class="text-gray-600">
+                <Label row="0" text="&#xf015;" class="fas text-2xl text-center"/>
+                <Label row="1" text="Home" class="text-xs text-center mt-1"/>
+            </GridLayout>
+            <GridLayout col="1" rows="auto, auto" tap="{{ onAddStationTab }}" class="text-gray-600">
+                <Label row="0" text="&#xf055;" class="fas text-2xl text-center"/>
+                <Label row="1" text="Add Station" class="text-xs text-center mt-1"/>
+            </GridLayout>
+            <GridLayout col="2" rows="auto, auto" tap="{{ onProfileTab }}" class="text-gray-600">
+                <Label row="0" text="&#xf2bd;" class="fas text-2xl text-center"/>
+                <Label row="1" text="Profile" class="text-xs text-center mt-1"/>
+            </GridLayout>
+        </GridLayout>
+    </GridLayout>
+</Page>

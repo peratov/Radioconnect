@@ -1,0 +1,56 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="bg-gray-100">
+    <ActionBar title="Admin Dashboard" class="bg-purple-600">
+        <NavigationButton text="Back" />
+    </ActionBar>
+
+    <GridLayout rows="*, auto">
+        <ScrollView row="0">
+            <StackLayout class="p-4">
+                <Label text="Welcome Admin" class="text-2xl font-bold mb-6"/>
+                
+                <!-- Quick Stats -->
+                <GridLayout columns="*, *" rows="auto, auto" class="mb-6">
+                    <StackLayout col="0" row="0" class="bg-white p-4 m-2 rounded-lg">
+                        <Label text="{{ pendingStations.length }}" class="text-2xl font-bold text-center text-purple-600"/>
+                        <Label text="Pending Stations" class="text-center text-gray-600"/>
+                    </StackLayout>
+                    <StackLayout col="1" row="0" class="bg-white p-4 m-2 rounded-lg">
+                        <Label text="{{ activeStations.length }}" class="text-2xl font-bold text-center text-green-600"/>
+                        <Label text="Active Stations" class="text-center text-gray-600"/>
+                    </StackLayout>
+                    <StackLayout col="0" row="1" class="bg-white p-4 m-2 rounded-lg">
+                        <Label text="{{ activeBannerAds.length }}" class="text-2xl font-bold text-center text-blue-600"/>
+                        <Label text="Active Ads" class="text-center text-gray-600"/>
+                    </StackLayout>
+                    <StackLayout col="1" row="1" class="bg-white p-4 m-2 rounded-lg">
+                        <Label text="{{ totalUsers }}" class="text-2xl font-bold text-center text-orange-600"/>
+                        <Label text="Total Users" class="text-center text-gray-600"/>
+                    </StackLayout>
+                </GridLayout>
+
+                <!-- Quick Actions -->
+                <Label text="Quick Actions" class="text-xl font-bold mb-4"/>
+                <Button text="Manage Station Approvals" tap="{{ onManageStations }}" class="-primary p-4 rounded-lg mb-4"/>
+                <Button text="Manage Banner Ads" tap="{{ onManageBannerAds }}" class="-primary p-4 rounded-lg mb-4"/>
+                <Button text="View Reports" tap="{{ onViewReports }}" class="-primary p-4 rounded-lg mb-4"/>
+                <Button text="User Management" tap="{{ onUserManagement }}" class="-primary p-4 rounded-lg mb-4"/>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Footer -->
+        <GridLayout row="1" columns="*, *, *" class="bg-white border-t border-gray-200 p-2">
+            <GridLayout col="0" rows="auto, auto" tap="{{ onHomeTab }}" class="text-gray-600">
+                <Label row="0" text="&#xf015;" class="fas text-2xl text-center"/>
+                <Label row="1" text="Home" class="text-xs text-center mt-1"/>
+            </GridLayout>
+            <GridLayout col="1" rows="auto, auto" tap="{{ onAddStationTab }}" class="text-gray-600">
+                <Label row="0" text="&#xf055;" class="fas text-2xl text-center"/>
+                <Label row="1" text="Add Station" class="text-xs text-center mt-1"/>
+            </GridLayout>
+            <GridLayout col="2" rows="auto, auto" tap="{{ onProfileTab }}" class="text-purple-600">
+                <Label row="0" text="&#xf2bd;" class="fas text-2xl text-center"/>
+                <Label row="1" text="Profile" class="text-xs text-center mt-1"/>
+            </GridLayout>
+        </GridLayout>
+    </GridLayout>
+</Page>

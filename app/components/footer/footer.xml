@@ -1,0 +1,14 @@
+<GridLayout columns="*, *, *" class="bg-white border-t border-gray-200 p-2">
+    <GridLayout col="0" rows="auto, auto" tap="{{ onHomeTab }}" class="{{ activeTab === 'home' ? 'text-purple-600' : 'text-gray-600' }}">
+        <Label row="0" text="&#xf015;" class="fas text-2xl text-center"/>
+        <Label row="1" text="Home" class="text-xs text-center mt-1"/>
+    </GridLayout>
+    <GridLayout col="1" rows="auto, auto" tap="{{ onAddStationTab }}" class="{{ activeTab === 'add' ? 'text-purple-600' : 'text-gray-600' }}">
+        <Label row="0" text="&#xf055;" class="fas text-2xl text-center"/>
+        <Label row="1" text="Add Station" class="text-xs text-center mt-1"/>
+    </GridLayout>
+    <GridLayout col="2" rows="auto, auto" tap="{{ onProfileTab }}" class="{{ activeTab === 'profile' ? 'text-purple-600' : 'text-gray-600' }}">
+        <Label row="0" text="&#xf2bd;" class="fas text-2xl text-center"/>
+        <Label row="1" text="Profile" class="text-xs text-center mt-1"/>
+    </GridLayout>
+</GridLayout>
